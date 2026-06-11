@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="MI PUNTADA — Arreglos, transformaciones de ropa y algo más..." />
+  <title>MI PUNTADA | Arreglos y Transformaciones de Ropa</title>
+
+  <!-- Tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --p1:#4B2E5D;  /* morado oscuro */
+      --p2:#6A3F7A;  /* violeta medio */
+      --p3:#A65C82;  /* rosado suave */
+      --p4:#C9D68C;  /* verde claro */
+      --p5:#E6F2B3;  /* amarillo verdoso */
+      --text:#1b1220;
+      --muted:rgba(255,255,255,.78);
+      --bg:linear-gradient(180deg, #F7F0FB 0%, #FFFFFF 60%);
+      --shadow: 0 16px 40px rgba(0,0,0,.10);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: var(--bg);
+      line-height:1.5;
+    }
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; }
+
+    .container{ width:min(1120px, 92vw); margin-inline:auto; }
+    .section{ padding: 56px 0; }
+    .section.compact{ padding: 40px 0; }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(75,46,93,.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0; gap:16px;
+    }
+    .brand{ display:flex; flex-direction:column; gap:2px; min-width: 220px; }
+    .brand .name{ color:#fff; font-weight:800; letter-spacing:.5px; font-size: 33px; }
+    .brand .tag{ color: rgba(255,255,255,.78); font-size: 12.5px; font-weight: 500; text-align:center; }
+
+    .navlinks{ display:flex; gap: 18px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+    .navlinks a{
+      color: rgba(255,255,255,.92);
+      font-weight:600; font-size: 13.5px;
+      padding: 10px 12px; border-radius: 999px;
+      transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+      border: 1px solid transparent;
+    }
+    .navlinks a:hover{
+      background: rgba(230,242,179,.18);
+      border-color: rgba(230,242,179,.45);
+      transform: translateY(-1px);
+      color:#fff;
+    }
+
+    .menu-toggle{
+      display:none;
+      border:1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.08);
+      color:#fff;
+      padding:10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight:800;
+    }
+    .mobile-panel{ display:none; padding-bottom: 14px; }
+    .mobile-panel .navlinks{ flex-direction:column; align-items:stretch; gap:10px; }
+    .mobile-panel .navlinks a{
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      text-align:center;
+    }
+
+    /* Hero */
+    .hero{ padding: 34px 0 20px; }
+    .hero-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 22px; align-items:stretch; }
+    .hero-card{
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(75,46,93,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:-140px -100px auto auto;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle at center, rgba(230,242,179,.7), rgba(230,242,179,0) 60%);
+      transform: rotate(12deg);
+      pointer-events:none;
+    }
+
+    .hero-title{
+      margin: 0 0 10px;
+      font-size: clamp(26px, 3.2vw, 26px);
+      line-height:1.15;
+      color: var(--p1);
+      letter-spacing:.2px;
+      font-weight: 900;
+    }
+    .hero-sub{
+      margin: 0 0 18px;
+      font-weight: 500;
+      color: rgba(27,18,32,.78);
+      max-width: 58ch;
+    }
+
+    .badge-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 16px; }
+    .badge{
+      background: rgba(106,63,122,.10);
+      border: 1px solid rgba(106,63,122,.18);
+      color: var(--p1);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12.5px;
+    }
+
+    .hero-actions{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top: 18px; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding: 12px 16px; border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 900;
+      cursor:pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 12px 26px rgba(0,0,0,.12); }
+
+    .btn-primary{
+      background: var(--p4);
+      border-color: rgba(75,46,93,.12);
+      color: #1e2b12;
+    }
+    .btn-primary:hover{ background: #b9cf78; border-color: rgba(75,46,93,.18); }
+
+    .btn-ghost{
+      background: rgba(255,255,255,.72);
+      border-color: rgba(75,46,93,.18);
+      color: var(--p1);
+    }
+    .btn-ghost:hover{ border-color: rgba(75,46,93,.28); background: rgba(255,255,255,.92); }
+
+    .hero-side{
+      background: linear-gradient(145deg, rgba(106,63,122,.95), rgba(75,46,93,.95));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      color:#fff;
+      display:flex; flex-direction:column; justify-content:space-between; gap:16px;
+      overflow:hidden; position:relative;
+    }
+    .hero-side::after{
+      content:"";
+      position:absolute; width: 260px; height: 260px;
+      right:-120px; bottom:-130px;
+      background: radial-gradient(circle at center, rgba(230,242,179,.55), rgba(230,242,179,0) 62%);
+      pointer-events:none;
+    }
+    .info-list{ display:grid; grid-template-columns:1fr; gap:12px; position:relative; z-index:1; }
+    .info-item{
+      display:flex; gap:12px; align-items:flex-start;
+      padding: 12px 12px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.07);
+    }
+    .info-item .ico{
+      width: 36px; height:36px; border-radius: 12px;
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(230,242,179,.18);
+      border: 1px solid rgba(230,242,179,.35);
+      flex:0 0 auto;
+      font-size: 18px;
+    }
+    .info-item b{ display:block; font-size: 13.5px; margin-bottom:2px; }
+    .info-item span{ display:block; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .cta-mini{
+      position:relative; z-index:1;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 14px 14px; border-radius: 16px;
+      background: rgba(230,242,179,.15);
+      border: 1px solid rgba(230,242,179,.35);
+    }
+    .cta-mini .txt{ font-weight:900; font-size: 13.5px; color:#fff; }
+    .cta-mini .hint{ font-weight:700; font-size: 12.5px; color: rgba(255,255,255,.85); }
+
+    /* Titles */
+    .title{ display:flex; flex-direction:column; gap:8px; margin-bottom: 18px; }
+    .title h2{
+      margin:0; color: var(--p1);
+      font-size: clamp(20px, 2.2vw, 28px);
+      letter-spacing:.2px; font-weight: 1000;
+    }
+    .title p{ margin:0; color: rgba(27,18,32,.72); font-weight: 650; max-width: 70ch; }
+
+    /* Cards */
+    .cards{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card{
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(75,46,93,.12);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.06);
+    }
+    .card h3{ margin: 10px 0 6px; font-size: 16px; color: var(--p1); font-weight: 1000; }
+    .card p{ margin:0; color: rgba(27,18,32,.72); font-weight: 650; font-size: 13.5px; }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 12px; border-radius: 999px;
+      border: 1px solid rgba(106,63,122,.22);
+      background: rgba(106,63,122,.10);
+      font-weight: 900; color: var(--p1);
+      font-size: 12.5px;
+    }
+
+    /* Map */
+    .map-wrap{
+      background: linear-gradient(145deg, rgba(106,63,122,.96), rgba(165,92,130,.88));
+      border-radius: var(--radius);
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.15);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .map{
+      border-radius: 14px; overflow:hidden;
+      min-height: 380px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    iframe{ width:100%; height:100%; border:0; }
+
+    /* Services */
+    .services-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items:start; }
+    .service-list{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .service{
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(75,46,93,.12);
+      border-radius: 16px;
+      padding: 12px;
+      display:flex; gap:10px; align-items:flex-start;
+    }
+    .service .dot{
+      width: 34px; height:34px; border-radius: 12px;
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(230,242,179,.55);
+      border: 1px solid rgba(75,46,93,.12);
+      flex:0 0 auto; font-size: 16px;
+    }
+    .service b{ display:block; color: var(--p1); font-size: 13.5px; font-weight: 1000; margin-bottom: 3px; }
+    .service span{ display:block; font-size: 12.8px; font-weight: 750; color: rgba(27,18,32,.68); }
+
+    /* Gallery */
+    .gallery{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
+    .gitem{
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(75,46,93,.12);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: 0 12px 26px rgba(0,0,0,.06);
+      position:relative;
+      min-height: 180px;
+    }
+    .gitem img{ width:100%; height:100%; object-fit:cover; filter:saturate(1.05); }
+    .span-6{ grid-column: span 6; } .span-4{ grid-column: span 4; } .span-8{ grid-column: span 8; } .span-12{ grid-column: span 12; }
+    .gcaption{
+      position:absolute; left:12px; bottom:12px;
+      background: rgba(75,46,93,.78);
+      color:#fff;
+      padding: 8px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(230,242,179,.25);
+      font-weight: 900;
+      font-size: 12.5px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Reviews */
+    .reviews{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 16px; align-items:start; }
+    .review-card{
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(75,46,93,.12);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 26px rgba(0,0,0,.06);
+      padding: 16px;
+    }
+    .stars{ color:#6f4b88; font-weight: 1000; letter-spacing: 1px; font-size: 14px; }
+    .quote{ font-weight: 800; color: rgba(27,18,32,.72); margin: 10px 0 0; font-size: 14px; }
+    .review-meta{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-top: 12px; padding-top: 12px;
+      border-top: 1px dashed rgba(75,46,93,.18);
+    }
+    .who b{ display:block; color: var(--p1); font-weight: 1000; }
+    .who span{ display:block; font-size: 12.5px; font-weight: 800; color: rgba(27,18,32,.6); }
+    .review-badge{
+      background: rgba(230,242,179,.55);
+      border:1px solid rgba(75,46,93,.12);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-weight: 1000;
+      font-size: 12.5px;
+      color: #2a361a;
+      white-space:nowrap;
+    }
+
+    /* Contact row */
+    .contact-row{
+      display:flex; align-items:center; justify-content:space-between; gap: 14px;
+      padding: 18px; border-radius: var(--radius);
+      border: 1px solid rgba(75,46,93,.12);
+      background: linear-gradient(145deg, rgba(106,63,122,.16), rgba(165,92,130,.14));
+      box-shadow: 0 10px 26px rgba(0,0,0,.06);
+    }
+    .contact-row .left{ display:flex; flex-direction:column; gap:6px; }
+    .contact-row .left b{ color: var(--p1); font-size: 18px; font-weight: 1000; }
+    .contact-row .left span{ color: rgba(27,18,32,.72); font-weight: 750; font-size: 13.5px; }
+
+    /* Footer */
+    footer{
+      background: linear-gradient(145deg, rgba(75,46,93,.96), rgba(106,63,122,.94));
+      color:#fff;
+      padding: 30px 0;
+      border-top: 1px solid rgba(255,255,255,.12);
+      margin-top: 10px;
+    }
+    .footer-grid{ display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; align-items:start; }
+    .foot-title{ font-weight: 1000; font-size: 16px; margin-bottom: 10px; letter-spacing:.3px; }
+    .foot-links a{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 10px 12px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      margin: 8px 0 0;
+      font-weight: 900; color: rgba(255,255,255,.92);
+    }
+    .foot-links a:hover{ background: rgba(255,255,255,.10); border-color: rgba(230,242,179,.35); }
+    .copyright{
+      margin-top: 18px; padding-top: 16px;
+      border-top: 1px dashed rgba(255,255,255,.18);
+      font-weight: 800; color: rgba(255,255,255,.82);
+      font-size: 12.5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .reviews{ grid-template-columns: 1fr; }
+      .cards{ grid-template-columns: 1fr; }
+      .services-grid{ grid-template-columns: 1fr; }
+      .service-list{ grid-template-columns: 1fr 1fr; }
+      .footer-grid{ grid-template-columns: 1fr; }
+      .navlinks{ display:none; }
+      .menu-toggle{ display:inline-flex; }
+      .mobile-panel{ display:block; }
+      .mobile-panel.is-open{ display:block; }
+    }
+    @media (max-width: 700px){
+      .service-list{ grid-template-columns: 1fr; }
+      .gallery{ gap:10px; }
+      .span-6, .span-4, .span-8, .span-12{ grid-column: span 12; }
+      .map{ min-height: 320px; }
+      .contact-row{ flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="brand" aria-label="MI PUNTADA">
+          <div class="name">MI PUNTADA</div>
+          <div class="tag">Arreglos, transformaciones de ropa y algo mas...</div>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰ Menú</button>
+
+        <nav class="navlinks" aria-label="Navegación principal">
+          <a href="#ubicacion">📍 Ubicación</a>
+          <a href="#servicios">🧵 Servicios</a>
+          <a href="#galeria">🖼️ Galería</a>
+          <a href="#reseñas">⭐ Reseñas</a>
+          <a href="#contacto">💬 Contacto</a>
+        </nav>
+      </div>
+
+      <div class="mobile-panel" id="mobilePanel">
+        <nav class="navlinks" aria-label="Navegación móvil">
+          <a href="#ubicacion">📍 Ubicación</a>
+          <a href="#servicios">🧵 Servicios</a>
+          <a href="#galeria">🖼️ Galería</a>
+          <a href="#reseñas">⭐ Reseñas</a>
+          <a href="#contacto">💬 Contacto</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-card">
+            <h1 class="hero-title">Reparar es un acto de rebeldia ✨</h1>
+            <p class="hero-sub">
+              En <b>MI PUNTADA</b> Hacemos arreglos con dedicación, transformaciones con estilo y detalles que se notan.
+              Desde cierres y dobladillos hasta composturas en general, trajes sastre y vestidos para fiesta.
+            </p>
+
+            <div class="badge-row">
+              <span class="badge">🧵 Arreglos a detalle</span>
+              <span class="badge">🧷 Transformaciones</span>
+              <span class="badge">⏱️ Atención profesional</span>
+              <span class="badge">💜 Calidad & confianza</span>
+            </div>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://wa.me/5217224756614" target="_blank" rel="noopener">
+                💬 Hablar por WhatsApp
+              </a>
+              <a class="btn btn-ghost" href="#ubicacion">📍 Ver ubicación</a>
+            </div>
+          </div>
+
+          <aside class="hero-side">
+            <div class="info-list">
+              <div class="info-item">
+                <div class="ico">📍</div>
+                <div>
+                  <b>Dirección</b>
+                  <span>Porfirio Díaz 11, Barrio de San Miguel, Ocoyoacac, Méx.</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="ico">📞</div>
+                <div>
+                  <b>Teléfono</b>
+                  <span>722 475 6614</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="ico">🕒</div>
+                <div>
+                  <b>Horarios</b>
+                  <span>
+                    Lunes 9:00–17:00<br/>
+                    Martes–Viernes 9:00–18:00<br/>
+                    Sábados 8:00–15:00<br/>
+                    Domingos Cerrado
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="cta-mini">
+              <div>
+                <div class="txt">¿Tienes una prenda?</div>
+                <div class="hint">Escríbenos y te orientamos ✅</div>
+              </div>
+              <a class="btn btn-primary" style="padding:10px 12px; border-radius:14px; box-shadow:none;"
+                 href="https://wa.me/5217224756614" target="_blank" rel="noopener">
+                WhatsApp
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= UBICACIÓN (MAPA) ================= -->
+    
+<section class="section compact" id="ubicacion">
+  <div class="container">
+    <div class="title">
+      <h2>📍 Ubicación exacta</h2>
+      <p>Encuéntranos en el mapa. Si quieres, también puedes contactarnos por WhatsApp.</p>
+    </div>
+
+    <div class="map-wrap">
+      <div class="map" aria-label="Mapa de Google Maps">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.690259823174!2d-99.4592739!3d19.2730931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa506853ad0e7e1d9%3A0x474f45c9d919cfcf!2sMi%20Puntada!5e0!3m2!1ses!2smx!4v1718050000000!5m2!1ses!2smx" 
+          width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+    </div>
+</section>
+
+
+        <div style="height:16px"></div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="pill">📍 Dirección</div>
+            <h3 style="margin-top:12px;">¿Dónde estamos?</h3>
+            <p>Porfirio Díaz 11, Barrio de San Miguel, 52740 Ocoyoacac, Méx.</p>
+          </div>
+
+          <div class="card">
+            <div class="pill">📞 Teléfono</div>
+            <h3 style="margin-top:12px;">Llámanos</h3>
+            <p>722 475 6614</p>
+          </div>
+
+          <div class="card">
+            <div class="pill">🕒 Horarios</div>
+            <h3 style="margin-top:12px;">Te esperamos</h3>
+            <p>
+              Lunes 9:00–17:00<br/>
+                    Martes–Viernes 9:00–18:00<br/>
+                    Sábados 8:00–15:00<br/>
+                    Domingos Cerrado
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SERVICIOS ================= -->
+    <section class="section" id="servicios">
+      <div class="container">
+        <div class="title">
+          <h2>🧵 Servicios</h2>
+          <p>Cuidamos cada detalle para que tu prenda conserve su forma, estilo y durabilidad.</p>
+        </div>
+
+        <div class="services-grid">
+          <div class="card">
+            <div class="pill">✨ Lo que hacemos</div>
+            <h3>Arreglos & transformaciones</h3>
+            <p>Selecciona el servicio que necesitas y escríbenos por WhatsApp para agendar una cita.</p>
+
+            <div style="height:12px"></div>
+
+            <div class="service-list">
+  	<div class="service"><div class="dot">🧷</div><div><b>Cierres</b></div></div>
+  	<div class="service"><div class="dot">📐</div><div><b>Dobladillos</b></div></div>
+ 	<div class="service"><div class="dot">🧵</div><div><b>Arreglos de ropa</b></div></div>
+ 	<div class="service"><div class="dot">🔧</div><div><b>Ajustes</b></div></div>
+ 	<div class="service"><div class="dot">🧩</div><div><b>Desajustes</b></div></div>
+ 	<div class="service"><div class="dot">👗</div><div><b>Vestidos para fiesta</b></div></div>
+  	<div class="service"><div class="dot">🧼</div><div><b>Composturas en general</b></div></div>
+  	<div class="service"><div class="dot">➕</div><div><b>Algo más...</b></div></div>
+	</div>
+</div>
+
+
+          <div class="card" style="background: linear-gradient(145deg, rgba(106,63,122,.16), rgba(165,92,130,.12));">
+            <div class="pill">✅ Cómo trabajamos</div>
+            <h3>Atención clara y resultados bonitos</h3>
+            <p>
+              Te orientamos con opciones para que tu prenda quede bien.
+              Pregunta por tiempo de entrega y recomendaciones según la tela.
+            </p>
+
+            <div style="height:14px"></div>
+
+            <div class="cards" style="grid-template-columns: 1fr; gap:12px;">
+              <div class="card" style="box-shadow:none; background:rgba(255,255,255,.78); padding:14px;">
+                <div class="pill">Paso 1</div>
+                <h3 style="margin-top:10px;">Acude a nuestra unica sucursal</h3>
+                <p>Con eso podemos sugerirte el mejor arreglo.</p>
+              </div>
+
+              <div class="card" style="box-shadow:none; background:rgba(255,255,255,.78); padding:14px;">
+                <div class="pill">Paso 2</div>
+                <h3 style="margin-top:10px;">Te asesoramos con opciones</h3>
+                <p>Te explicamos el tipo de ajuste y el resultado esperado.</p>
+              </div>
+
+              <div class="card" style="box-shadow:none; background:rgba(255,255,255,.78); padding:14px;">
+                <div class="pill"> Paso 3</div>
+                <h3 style="margin-top:10px;">Recibimos tu nota unica</h3>
+                <p>Con terminados limpios y de calidad.</p>
+              </div>
+            </div>
+
+            <div style="height:14px"></div>
+
+            <a class="btn btn-primary" style="width:100%;" href="https://wa.me/5217224756614" target="_blank" rel="noopener">
+              💬 Solicitar información por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- ================= RESEÑAS ================= -->
+    <section class="section" id="reseñas" style="background: linear-gradient(145deg, rgba(106,63,122,.12), rgba(165,92,130,.08));">
+      <div class="container">
+        <div class="title">
+          <h2>⭐ Reseñas destacadas</h2>
+          <p>Cuando me pases 3–5 reseñas de Google Maps, las pongo con sus textos reales (nombre y fecha si quieres).</p>
+        </div>
+
+        <div class="reviews">
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p class="quote">“Excelente servicio, muy buena atención y quedó perfecto el dobladillo. Se nota la experiencia.”</p>
+            <div class="review-meta">
+              <div class="who">
+                <b>Ana G.</b>
+                <span>Cliente • Ajuste y dobladillo</span>
+              </div>
+              <div class="review-badge">Rapidez y calidad</div>
+            </div>
+          </div>
+
+          <div style="display:grid; gap: 14px;">
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="quote">“Le repararon el cierre y quedó como nuevo. Muy profesionales.”</p>
+              <div class="review-meta">
+                <div class="who">
+                  <b>María L.</b>
+                  <span>Cliente • Cierres</span>
+                </div>
+                <div class="review-badge">Detalles finos</div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p class="quote">“Me ajustaron una prenda para un evento y quedó justo. Recomendadísima.”</p>
+              <div class="review-meta">
+                <div class="who">
+                  <b>Carla P.</b>
+                  <span>Cliente • Vestido / Ajustes</span>
+                </div>
+                <div class="review-badge">Quedó perfecto</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="contact-row" id="contacto">
+          <div class="left">
+            <b>💬 ¿List@ para arreglar tu prenda?</b>
+            <span>Escríbenos por WhatsApp y te ayudamos con tu caso.</span>
+          </div>
+
+          <!-- Botón destacado -->
+          <a class="btn btn-primary" style="padding:14px 18px; border-radius:16px;" href="https://wa.me/5217224756614" target="_blank" rel="noopener">
+            WhatsApp · Contactar ahora
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="foot-title">MI PUNTADA 💜</div>
+          <div style="font-weight:800; color: rgba(255,255,255,.86);">
+            Arreglos, transformaciones de ropa y algo más…
+          </div>
+          <div class="copyright">
+            © <span id="year"></span> MI PUNTADA. Todos los derechos reservados.
+          </div>
+        </div>
+
+        <div class="foot-links" aria-label="Enlaces de contacto">
+          <div class="foot-title" style="margin-bottom:0;">Contacto</div>
+          <a href="tel:+527224756614">📞 Llamar</a>
+          <a href="mailto:info@mi-puntada.com">✉️ Correo</a>
+          <a href="https://wa.me/5217224756614" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+
+        <div class="foot-links" aria-label="Redes sociales">
+          <div class="foot-title" style="margin-bottom:0;">Redes</div>
+          <a href="https://www.facebook.com/people/Mi-Puntada/61574020625533/?rdid=DaVofJCeM6DbqIfS&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BWeyDXoLq%2F" target="_blank" rel="noopener">
+            📘 Facebook
+          </a>
+          <a href="#galeria">🖼️ Ver trabajos</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const mobilePanel = document.getElementById('mobilePanel');
+    menuToggle?.addEventListener('click', () => mobilePanel.classList.toggle('is-open'));
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
